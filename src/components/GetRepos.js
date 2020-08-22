@@ -67,8 +67,6 @@ class GetRepos extends Component {
             fontSize: 80,
           };
 
-          console.log(this.state)
-
       return (
         <div style={main}>
            <h1 style={main}>Git Hub Requests</h1>
