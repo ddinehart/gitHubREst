@@ -19,8 +19,6 @@ class OrganizationResults extends Component {
             fontSize: 20,
           };
 
-          console.log("props", this.props)
-
       return (
         <Grid.Row>
             <Grid.Column>
