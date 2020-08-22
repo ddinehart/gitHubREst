@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+THis project will do 2 things.
+1. Find a GitHub organization by name and get back a list of all public members in that organization, including each member's username, real name, and email address (if available). 
+
+2. Find a user by their user name and return back a list of all public repos that they have made at least one commit to. For each repo returned include the repo name, the number of commits the user made to the repo, and the last date that the user committed to the repo.
+
 ## Available Scripts
 
 In the project directory, you can run:
