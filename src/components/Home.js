@@ -24,7 +24,6 @@ class Home extends Component {
         if (organization !== "" || null) {
             axios
             .get("https://api.github.com/orgs/"+organization+"/public_members").then(response => {
-                console.log("users result", response)
                     response.data.forEach(username => {
                         let userURL = username.url.toString()
                         // calls get repos function to get members information
@@ -41,7 +40,6 @@ class Home extends Component {
     getReposFromUser = (url) => {
         fetch(url).then(res => res.json()).then(
             (result) => {
-                console.log("results", result)
                 const usersList = this.state.users
                 usersList.push(result)
                 this.setState({users: usersList})
