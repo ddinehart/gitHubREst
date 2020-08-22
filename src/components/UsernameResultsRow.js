@@ -26,7 +26,7 @@ class UsernameResultsRow extends Component {
             
           {/* replaces null values with N/A */}
             {(this.props.repo.data[0].commit.author.date === null ) && (<Table.Cell style={UsernameResults}>N/A</Table.Cell>)}
-            {(this.props.repo.data[0].commit.author.date !== null ) && (<Table.Cell style={UsernameResults}>{moment(this.props.repo.data[0].commit.author.date).format("MM-DD-YYYY")}</Table.Cell>)}
+            {(this.props.repo.data[0].commit.author.date !== null ) && (<Table.Cell style={UsernameResults}>{moment(this.props.repo.data[0].commit.author.date).format("DD-MM-YYYY")}</Table.Cell>)}
             
         </Table.Row>
                     

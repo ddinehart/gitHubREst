@@ -25,7 +25,7 @@ class UsernameResults extends Component {
                         <Table.Row>
                             <Table.HeaderCell style={OrganizationResults}>Repo Title</Table.HeaderCell>
                             <Table.HeaderCell style={OrganizationResults}>Total # of Commits</Table.HeaderCell>
-                            <Table.HeaderCell style={OrganizationResults}>Last Date of Commit</Table.HeaderCell>
+                            <Table.HeaderCell style={OrganizationResults}>Last Date of Commit </Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
