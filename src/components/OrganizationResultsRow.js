@@ -9,9 +9,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 
 class OrganizationResultsRow extends Component {
-    state = {
-       
-    }
+    state = {}
   
     render() {
         const OrganizationResults = {
@@ -24,14 +22,19 @@ class OrganizationResultsRow extends Component {
       return (
         
         <Table.Row>
-            <Table.Cell style={OrganizationResults}>{this.props.user.login}</Table.Cell>
-            <Table.Cell style={OrganizationResults}>{this.props.user.name}</Table.Cell>
+            {/* replaces null values with N/A */}
+            {(this.props.user.login === null ) && (<Table.Cell style={OrganizationResults}>N/A</Table.Cell>)}
+            {(this.props.user.login !== null ) && (<Table.Cell style={OrganizationResults}>{this.props.user.login}</Table.Cell>)}
+
+            {/* replaces null values with N/A */}
+            {(this.props.user.name === null ) && (<Table.Cell style={OrganizationResults}>N/A</Table.Cell>)}
+            {(this.props.user.name !== null ) && (<Table.Cell style={OrganizationResults}>{this.props.user.name}</Table.Cell>)}
+
+            {/* replaces null values with N/A */}
             {(this.props.user.email === null ) && (<Table.Cell style={OrganizationResults}>N/A</Table.Cell>)}
             {(this.props.user.email !== null ) && (<Table.Cell style={OrganizationResults}>{this.props.user.email}</Table.Cell>)}
             
         </Table.Row>
-                    
-          
       )
     }
   }

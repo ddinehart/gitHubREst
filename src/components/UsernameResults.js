@@ -4,22 +4,18 @@ import React, { Component } from 'react';
 import './../App.css';
 import { Grid, Table } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import OrganizationResultsRow from './OrganizationResultsRow';
+import UsernameResultsRow from './UsernameResultsRow';
 
 
 
-class OrganizationResults extends Component {
-    state = {
-       
-    }
+class UsernameResults extends Component {
+    state = {}
   
     render() {
         const OrganizationResults = {
             textAlign: "center",
             fontSize: 20,
           };
-
-          console.log("props", this.props)
 
       return (
         <Grid.Row>
@@ -33,13 +29,12 @@ class OrganizationResults extends Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {this.props.users.map((user, i) => (
-                            <OrganizationResultsRow
-                                user={user}
+                        {this.props.repos.map((repo, i) => (
+                            <UsernameResultsRow
+                                repo={repo}
                                 key={i}
-                            >
-
-                            </OrganizationResultsRow>
+                                title={this.props.repoTitles[i].name}
+                            />
                         ))}
                     </Table.Body>
                 </Table>
@@ -49,7 +44,7 @@ class OrganizationResults extends Component {
     }
   }
   
-  export default OrganizationResults;
+  export default UsernameResults;
   
 
 

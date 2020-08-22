@@ -8,27 +8,33 @@ import 'semantic-ui-css/semantic.min.css';
 
 
 
-class OrganizationResultsRow extends Component {
-    state = {
-       
-    }
+class UsernameResultsRow extends Component {
+    state = {}
   
     render() {
-        const OrganizationResults = {
+        const UsernameResults = {
             textAlign: "center",
             fontSize: 20,
           };
 
-          console.log("props", this.props)
-
+          let date = this.props.repo.data[0].commit.author.date
+          if (date !== null ) {
+            
+          }
       return (
-        
+
         <Table.Row>
-            <Table.Cell style={OrganizationResults}>public repo title</Table.Cell>
-            <Table.Cell style={OrganizationResults}># of commits</Table.Cell>
-            <Table.Cell style={OrganizationResults}>Date of commits</Table.Cell>
-            {/* {(this.props.repo.email === null ) && (<Table.Cell style={OrganizationResults}>Last Date Committed to</Table.Cell>)}
-            {(this.props.repo.email !== null ) && (<Table.Cell style={OrganizationResults}>Last Date of Commit</Table.Cell>)} */}
+          {/* replaces null values with N/A */}
+            {(this.props.title === null ) && (<Table.Cell style={UsernameResults}>N/A</Table.Cell>)}
+            {(this.props.title !== null ) && (<Table.Cell style={UsernameResults}>{this.props.title}</Table.Cell>)}
+            
+          {/* replaces null values with N/A */}
+            {(this.props.repo.data.length === null ) && (<Table.Cell style={UsernameResults}>N/A</Table.Cell>)}
+            {(this.props.repo.data.length !== null ) && (<Table.Cell style={UsernameResults}>{this.props.repo.data.length}</Table.Cell>)}
+            
+          {/* replaces null values with N/A */}
+            {(this.props.repo.data[0].commit.author.date === null ) && (<Table.Cell style={UsernameResults}>N/A</Table.Cell>)}
+            {(this.props.repo.data[0].commit.author.date !== null ) && (<Table.Cell style={UsernameResults}>{this.props.repo.data[0].commit.author.date}</Table.Cell>)}
             
         </Table.Row>
                     
@@ -37,7 +43,7 @@ class OrganizationResultsRow extends Component {
     }
   }
   
-  export default OrganizationResultsRow;
+  export default UsernameResultsRow;
   
 
 

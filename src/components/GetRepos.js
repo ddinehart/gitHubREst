@@ -10,80 +10,23 @@ import UsernameResults from './UsernameResults';
 
 class GetRepos extends Component {
     state = {
-        buttonTitle: "Get Users Search Form Or Click to Switch",
-        displayBio: false,
         repos: [],
+        repoTitles:[],
         requestFormInput: ""
 }
 
-    doApiCall = () => {
-        if (this.state.buttonTitle === "Get Users Search Form Or Click to Switch") {
-            console.log("get user from org ")
-            this.getUserFromOrg()
-        } else {
-            console.log("repos from user")
-            this.getReposFromUser()
-        }
-    }
+// API Calls for Getting Repos and Commits
 
-    // getUserFromOrg = () => {
-    //     console.log()
-    //     const organization = this.state.requestFormInput
-    //     if (organization !== "" || null) {
-    //         axios
-    //         .get("https://api.github.com/orgs/"+organization+"/public_members").then(response => {
-    //             console.log("users result", response)
-    //                 response.data.forEach(username => {
-    //                     let userURL = username.url.toString()
-    //                     this.getReposFromUser(userURL)
-    //                 });
-    //         }).catch(error => {
-    //             console.log(error.response)
-    //             this.setState({repos: []})
-    //         })
-    //     } 
-    // }
-    // const USER = 'TODO: your GitHub user name'
-    // const EMAIL = 'TODO: your GitHub email address'
-    
-    // const github = require('octokat')({ token: 'TODO: your GitHub API token' })
-    
-    // return github.fromUrl(`https://api.github.com/users/${USER}/events`)
-    //   .fetch()
-    //   .then(events => {
-    //     let lastCommit
-    
-    //     events.some(event => {
-    //       return event.type === 'PushEvent' && event.payload.commits.reverse().some(commit => {
-    //         if (commit.author.email === EMAIL) {
-    //           lastCommit = {
-    //             repo: event.repo.name,
-    //             sha: commit.sha,
-    //             time: new Date(event.createdAt),
-    //             message: commit.message,
-    //             url: commit.url
-    //           }
-    
-    //           return true
-    //         }
-    
-    //         return false
-    //       })
-    //     })
-    
-    //     return lastCommit
-    //   })
-    
-    getRepoFromUser = () => {
-        console.log()
+    // takes input and calls api to get users repos
+    getReposFromUser = () => {
         const username = this.state.requestFormInput
         if (username !== "" || null) {
             axios
-            .get("https://api.github.com/users/"+username+"/events").then(response => {
-                console.log("users events", response)
+            .get("https://api.github.com/users/"+username+"/repos").then(response => {
+                this.setState({repoTitles: response.data})
                     response.data.forEach(repo => {
-                        let userURL = repo.url.toString()
-                        this.getReposFromEvents(userURL)
+                        // calls get commit function to get users commit info 
+                        this.getCommitsFromRepo(repo.url)
                     });
             }).catch(error => {
                 console.log(error.response)
@@ -92,37 +35,29 @@ class GetRepos extends Component {
         } 
     }
 
-    // gets a users information from their github profile
-    // getReposFromUser = (url) => {
-    //     fetch(url).then(res => res.json()).then(
-    //         (result) => {
-    //             console.log("results", result)
-    //             const reposList = this.state.repos
-    //             reposList.push(result)
-    //             this.setState({repos: reposList})
-    //         },
-    //         (error) => {
-    //             console.log(error)
-    //         })
-    // }
+    // gets a users commit information from based on repos
+    getCommitsFromRepo = (url) => {
+        const username = this.state.requestFormInput
+        if (username !== "" || null) {
+            axios
+            .get(url+"/commits?=author="+username).then(response => {
+                const commitsList = this.state.repos
+                commitsList.push(response)
+                this.setState({repos: commitsList})
+            }).catch(error => {
+                console.log(error.response)
+                this.setState({repos: []})
+            })
+        } 
+    }
+// END API calls
 
-
-
-    toggleDisplayBio = () => {
-        this.setState ({ displayBio: !this.state.displayBio})
-        if (this.state.displayBio === false) {
-            this.setState ({ buttonTitle: "Get Repos Search Form Or Click to Switch"})
-        } else {
-            this.setState ({ buttonTitle: "Get Users Search Form Or Click to Switch"})
-        };
-      }
-
-
+    // sets input value
       setRequestInput = (data) => {
-        //   console.log("setting input", data.id, data.value)
           this.setState({ requestFormInput: data.value})
       }
   
+
     render() {
         const main = {
             textAlign: "center",
@@ -132,40 +67,17 @@ class GetRepos extends Component {
             fontSize: 80,
           };
 
-          console.log("state", this.state)
-
       return (
         <div style={main}>
            <h1 style={main}>Git Hub Requests</h1>
-            {/* <Button 
-                size="huge"
-                fluid
-                color="black"
-                onClick={this.toggleDisplayBio}
-            >
-                {this.state.buttonTitle}
-            </Button>
-            {
-            this.state.displayBio ? ( */}
-                <RequestForm 
-                    title={"Search a user by their user name and return back a list of all public repos"} 
-                    placeholder={"username"} 
-                    getUserFromOrg={this.getRepoFromUser}
-                    setRequestInput={this.setRequestInput}
-                ></RequestForm>
-                {/* ) : (
-            <div>
-                <RequestForm 
-                    title={"Search a GitHub organization by name and get back a list of all public members"} 
-                    placeholder={"organization"} 
-                    getUserFromOrg={this.doApiCall}
-                    setRequestInput={this.setRequestInput}
-                    ></RequestForm>
-            </div>
-          )
-        } */}
-        <br></br>
-        <UsernameResults users={this.state.repos}></UsernameResults>
+            <RequestForm 
+                title={"Search a user by their username and get back a list of public repos."} 
+                placeholder={"username"} 
+                getUserFromOrg={this.getReposFromUser}
+                setRequestInput={this.setRequestInput}
+            />
+            <br></br>
+            <UsernameResults repoTitles={this.state.repoTitles} repos={this.state.repos}></UsernameResults>
          </div>
       )
     }
