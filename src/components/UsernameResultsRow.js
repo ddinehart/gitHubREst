@@ -1,12 +1,8 @@
-
-
-
 import React, { Component } from 'react';
 import './../App.css';
 import {Table } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-
-
+import moment from 'moment';
 
 class UsernameResultsRow extends Component {
     state = {}
@@ -17,10 +13,6 @@ class UsernameResultsRow extends Component {
             fontSize: 20,
           };
 
-          let date = this.props.repo.data[0].commit.author.date
-          if (date !== null ) {
-            
-          }
       return (
 
         <Table.Row>
@@ -34,7 +26,7 @@ class UsernameResultsRow extends Component {
             
           {/* replaces null values with N/A */}
             {(this.props.repo.data[0].commit.author.date === null ) && (<Table.Cell style={UsernameResults}>N/A</Table.Cell>)}
-            {(this.props.repo.data[0].commit.author.date !== null ) && (<Table.Cell style={UsernameResults}>{this.props.repo.data[0].commit.author.date}</Table.Cell>)}
+            {(this.props.repo.data[0].commit.author.date !== null ) && (<Table.Cell style={UsernameResults}>{moment(this.props.repo.data[0].commit.author.date).format("MM-DD-YYYY")}</Table.Cell>)}
             
         </Table.Row>
                     
