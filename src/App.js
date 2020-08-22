@@ -13,7 +13,7 @@ function App() {
       <div className="nav">
         <Nav />
         <Switch>
-          <Route path="" component={Home}/>
+          {/* <Route path="" component={Home}/> */}
           <Route path="/home" component={Home}/>
           <Route path="/searchForRepos" component={GetRepos}/>
         </Switch>
